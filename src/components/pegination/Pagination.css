@@ -1,0 +1,33 @@
+/* #content{
+    margin-top: 100px;
+    position: fixed;
+    text-align: center;
+    left: 450px;
+  bottom: 10px;
+    
+  } */
+  /* .card-answer{
+    padding: 10px;
+    font-size: 10px;
+    text-align:justify;
+  } */
+  /* .pagination{
+        position: sticky;
+         bottom: 1px;
+  } */
+  .ques{
+    font:normal normal 600 18px/32px Segoe UI;
+    text-align: left;
+    color:#707070;
+    /* height:12px; */
+    /* margin-left:45px; */
+    /* display:flex; */
+  }
+  .ans{
+    text-align: justify;
+    color: #707070;
+    padding-left:110px;
+    font:normal normal  15px/28px Segoe UI;
+    opacity:1;
+    /* display:flex;; */
+  }

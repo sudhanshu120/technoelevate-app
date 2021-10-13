@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/navbar/Navbar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import UploadQuestionView from "./components/uploadQuestion/UploadQuestionView";
+import SearchView from "./components/search/SearchView";
 
+import Newheader from "./components/navbar/Newheader";
+import { useState } from "react";
 function App() {
+
+
+  const [valNavSearch, setvalNavSearch] = useState(false)
+  const moveAfterValidation=(isVal)=>{
+    setvalNavSearch(isVal)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        {/* <Navbar/> */}
+      
+        <Newheader moveAfterValidation={moveAfterValidation}/>
+      </div>
+
+      <Switch>
+          <Route exact path="/">
+            <UploadQuestionView/>
+          </Route>
+          {valNavSearch && <Route exact path="/search">
+            <SearchView/>
+          </Route>}
+      </Switch>
+    </Router>
   );
 }
 

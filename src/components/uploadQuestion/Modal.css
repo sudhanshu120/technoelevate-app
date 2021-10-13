@@ -1,0 +1,13 @@
+#button{
+    background: #FAA81D 0% 0% no-repeat padding-box;
+    border-radius: 6px;
+opacity: 1;
+}
+
+#text{
+    text-align: center;
+}
+
+#success{
+    text-align: center;
+}

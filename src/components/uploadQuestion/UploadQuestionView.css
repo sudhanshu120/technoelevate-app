@@ -1,0 +1,119 @@
+/*.InputField1{
+margin-top: 150px;
+margin-left: 100px; 
+
+
+
+}
+.InputField2{
+    
+margin-top: 150px;
+margin-left: 20px; 
+
+}
+
+.InputField3{
+    margin-top: 150px;
+    margin-left: 20px; 
+}
+
+.InputField4{
+    margin-top: 150px;
+    margin-left: 20px; 
+    height: 88px;
+    width: 80%;
+}
+
+.InputField5{
+    margin-top: 150px;
+    margin-left: 20px;
+}
+.g-2{
+    
+    height: 88px;
+    width: 80%;
+    
+}
+
+
+.questionbox{
+    margin-top: 100px;
+    /* height: 88px; 
+    width: 100%;
+    margin-left: 50px; 
+}
+
+.dropdown5{
+    height: 88px;
+    width: 80%;
+    margin-top: 150px;
+    margin-left: 0x;
+}
+
+.answerbox{
+    width: 58%;
+    margin-left: 100px;
+    /* height: 200px; 
+    margin-top: 
+    10px;
+}*/
+
+.mainDiv{
+    
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+.container1{
+    margin-top: 0px;
+}
+.header{
+/* margin-top:30px; */
+/* margin-left: 15px; */
+margin-left:10px;
+margin-top:50px;
+margin-bottom: 23px;
+/* height: 40px; */
+text-align:left;
+font: normal normal bold 27px/38px Sitka Banner;
+/* letter-spacing: 0px; */
+color: #086288;
+opacity: 1;
+}
+
+.btn-icon-plus{
+    border-radius: 60%;
+    margin-right: 10px;
+    background-color: #FAA81D;
+    border: 1px solid white;
+}
+.fa-plus{
+    color: white;
+    /* font-size: 10px; */
+}
+#btn-text-add{
+    background-color: #FAA81D;
+    border: none;
+    margin-bottom: 20px;
+}
+
+#btn-text-add1{
+    background-color: #FAA81D;
+    border: none;
+    margin-top: 100px;
+    /* margin-left: 95%; */
+    
+}
+
+.addbtn{
+    display: none;
+}
+
+.delete{
+    display:none;
+}
+
+.submitbtn{
+    margin-top: 10px;
+}

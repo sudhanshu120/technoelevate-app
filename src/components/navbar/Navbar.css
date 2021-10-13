@@ -1,0 +1,86 @@
+.logo
+{
+    width:130px;
+    height: 35px;
+    margin-left: 20px;
+}
+.nav-item dropdown
+{
+    left: 50px;
+}
+.dropdown
+
+{
+    margin-left: 10px;
+    position: relative;
+    right: 20px;
+    
+    
+
+}
+.tech
+{
+    position: relative;
+    right: -27px;
+    font-size: 13px;
+}
+.level
+{
+    position:relative;
+    left:20px;
+}
+.me-auto my-2 my-lg-0 navbar-nav navbar-nav-scroll
+{
+    margin: 10px;
+}
+#dropdown-basic-button
+{
+    margin-left: 50px;
+    
+    background:whitesmoke;
+    color:gray;
+    border-color:darkgray;
+    padding: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 18px;
+    position: relative;
+    top: 5px;
+    
+}
+#dropdown-basic-button
+{
+    position:relative;
+    
+        right:10px;
+        padding-right: 15px;
+        
+
+    
+}
+.fdate
+{
+    position: relative;
+    right: -19px;
+    top: 6px;
+    border: radius 3px;
+    text-align: center;
+    font-size: 13px;
+}
+.todate
+{
+    position: relative;
+    left: 25px;
+    top: 6px;
+    font-size: 13px;
+}
+.btn-outline-success {
+    color: white;
+    border-color: orange;
+    background-color:orange;
+}
+.btn-outline-success:hover
+{
+    background-color: orange;
+    border-color: orange;
+}
