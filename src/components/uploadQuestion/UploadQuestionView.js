@@ -41,16 +41,13 @@ function Technoelevate() {
   const [firstNameErrorCharacter, setfirstNameErrorCharacter] = useState(false);
 
   const [departmentError, setdepartmentError] = useState(false);
-  const [departmentErrorCharacter, setdepartmentErrorCharacter] =
-    useState(false);
+  const [departmentErrorCharacter, setdepartmentErrorCharacter] = useState(false);
 
   const [clientNameError, setclientNameError] = useState(false);
-  const [clientNameErrorCharacter, setclientNameErrorCharacter] =
-    useState(false);
+  const [clientNameErrorCharacter, setclientNameErrorCharacter] = useState(false);
 
   const [technologyError, settechnologyError] = useState(false);
-  const [technologyErrorCharacter, settechnologyErrorCharacter] =
-    useState(false);
+  const [technologyErrorCharacter, settechnologyErrorCharacter] = useState(false);
 
   
   const [questionError, setquestionError] = useState(false);
@@ -233,25 +230,7 @@ function Technoelevate() {
   };
 
 
-// Modal
-// ------------------------------------------------------------------------------------
-const [val, setval] = useState(false)
-const [show, setShow] = useState(false);
 
-
-
-  const handleClose = () => {
-     
-    setShow(false);
-    
-  }
-
-  // const handleDelete =()=>{
-  //   setval(true)
-  //   setShow(false);
-  // }
-
-  // const handleShow = () => setShow(true);
 
   const deleteGetDataIndex = (index) => {
     const questionscopy = [...questions];
@@ -284,17 +263,17 @@ const sendIndexOfDelete = (index) => {
                 <Form.Control
                   type="text"
                   name="candidateName"
-                  className="mb-2"
+                  className="mb-1"
                   value={primaryInfo.candidateName}
                   onChange={updateuserData}
                   placeholder="Enter Your Name"
                 />
               </FloatingLabel>
               {firstNameError && (
-                <p className="text-danger">Please enter your name </p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please enter your name </div>
               )}
               {firstNameErrorCharacter && (
-                <p className="text-danger">Only characters are allowed</p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
               )}
             </Col>
 
@@ -303,7 +282,7 @@ const sendIndexOfDelete = (index) => {
                 <Form.Select
                   aria-label="Floating label select example"
                   name="department"
-                  className="mb-2"
+                  className="mb-1"
                   value={primaryInfo.department}
                   onChange={updateuserData}
                 >
@@ -314,10 +293,10 @@ const sendIndexOfDelete = (index) => {
                 </Form.Select>
               </FloatingLabel>
               {departmentError && (
-                <p className="text-danger">Please select the department </p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please select the department </div>
               )}
               {departmentErrorCharacter && (
-                <p className="text-danger">Only characters are allowed</p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
               )}
             </Col>
             <Col md={3} className="InputField3">
@@ -326,16 +305,16 @@ const sendIndexOfDelete = (index) => {
                   type="text"
                   placeholder="Enter Your Name"
                   name="clientName"
-                  className="mb-2"
+                  className="mb-1"
                   value={primaryInfo.clientName}
                   onChange={updateuserData}
                 />
               </FloatingLabel>
               {clientNameError && (
-                <p className="text-danger">Please enter client name </p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please enter client name </div>
               )}
               {clientNameErrorCharacter && (
-                <p className="text-danger">Only characters are allowed</p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
               )}
             </Col>
 
@@ -344,7 +323,7 @@ const sendIndexOfDelete = (index) => {
                 <Form.Select
                   aria-label="Floating label select example"
                   name="technology"
-                  className="mb-3"
+                  className="mb-1"
                   value={primaryInfo.technology}
                   onChange={updateuserData}
                 >
@@ -357,14 +336,15 @@ const sendIndexOfDelete = (index) => {
                 </Form.Select>
               </FloatingLabel>
               {technologyError && (
-                <p className="text-danger">Please select technology </p>
+                <div className="mb-2" style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please select technology </div>
               )}
               {technologyErrorCharacter && (
-                <p className="text-danger">Only characters are allowed</p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
               )}
             </Col>
           </Row>
         </Container>
+        
         {questions.map((value, index) => {
           return (
             <div key={index}>
@@ -373,12 +353,12 @@ const sendIndexOfDelete = (index) => {
                   <Col md={9} className="questionbox">
                     <FloatingLabel
                       controlId="floatingTextarea"
-                      className="questionbox"
+                      className="questionbox mt-3"
                       label="Question"
                     >
                       <Form.Control
                         as="textarea"
-                        className="mb-3"
+                        className="mb-1"
                         name="question"
                         value={questions[index].question}
                         onChange={(event) => updatequestionData(event, index)}
@@ -388,7 +368,7 @@ const sendIndexOfDelete = (index) => {
                     </FloatingLabel>
                     {/* {questions[index].question?'':setquestionError} */}
                     {questionError && (
-                <p className="text-danger">Please enter question </p>
+                <div className="mb-2" style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please enter question </div>
               )}
                   </Col>
 
@@ -396,11 +376,12 @@ const sendIndexOfDelete = (index) => {
                     <FloatingLabel
                       controlId="floatingSelectGrid"
                       label="Difficulty Level"
+                      className="mt-3"
                     >
                       <Form.Select
                         aria-label="Floating label select example"
-                        className="mb-3"
-                        name="difficultyLevel"
+                        className="mb-1"
+                        name="difficultyLeve"
                         value={questions[index].difficultyLevel}
                         onChange={(event) => updatequestionData(event, index)}
                       >
@@ -410,9 +391,9 @@ const sendIndexOfDelete = (index) => {
                         <option value="Expert">Expert</option>
                       </Form.Select>
                     </FloatingLabel>
-                    {/* {questions[index].difficultyLevel?'':setdifficultyLevelError} */}
+                  
                     {difficultyLevelError && (
-                <p className="text-danger">Please select difficultyLevel </p>
+                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please select difficultyLevel </div>
               )}
                   </Col>
                 </Row>
@@ -422,7 +403,7 @@ const sendIndexOfDelete = (index) => {
                   <Col md={9}>
                     <FloatingLabel
                       controlId="floatingTextarea"
-                      className="answerbox"
+                      className="answerbox mt-4"
                       label="Answer"
                     >
                       <Form.Control
@@ -448,17 +429,10 @@ const sendIndexOfDelete = (index) => {
                               addAns(event, index);
                             }
                           :() =>{
-                            // setShow(true)
+                            
                             sendIndexOfDelete(index);
                             { setisShowDelete(true) }
-                            //  if(val){
-                              // const questionscopy = [...questions];
-
-                              // questionscopy.splice(index, 1);
-                              // setQuestions(questionscopy);
-                              setval(false)
-                            // }
-                           
+                            
                             
                             }
                       }
@@ -485,7 +459,7 @@ const sendIndexOfDelete = (index) => {
             </div>
           );
         })}
-        {/* id="btn-text-add1" */}
+    
         <Container>
           <Row>
             <Col md={12} className="submitbtn">
@@ -507,21 +481,6 @@ const sendIndexOfDelete = (index) => {
       </Container>
 
 
-      {/* <Modal show={show} onHide={handleClose}>
-                                  <Modal.Header closeButton>
-                                    <Modal.Title>Delete Question</Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>Do You Want To Delete</Modal.Body>
-                                  <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleClose}>
-                                      Close
-                                    </Button>
-
-                                    <Button variant="primary" onClick={handleDelete}>
-                                      Delete
-                                    </Button>
-                                  </Modal.Footer>
-                            </Modal> */}
 
 
 {/* ------------------------------------------------------------------ */}

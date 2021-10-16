@@ -1,32 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import './Pagination.css'
-// import Pagination from 'react-responsive-pagination';
-
-// ===========================================================================
-// import React, { useState } from 'react';
-// import Pagination from 'react-responsive-pagination';
-
-
-
-// function Pagin() {
-//   const [currentPage, setCurrentPage] = useState(4);
-
-//   const totalPages = 17;
-  
-                      
-//     return (
-//         <div>
-//       <Pagination
-//       current={currentPage}
-//       total={totalPages}
-//       onPageChange={setCurrentPage}
-//     />
-//         </div>
-//     )
-// }
-
-// ===========================================================================
 
 const Pagination = ({ showPerPage, onPaginationChange, total }) => {
    
@@ -76,11 +50,8 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
                     ><a className="page-link" href="!#">Next</a></li>
                 </ul>
             </nav>
+      </div>
 
-
-
-
-        </div>
         
     )
 }

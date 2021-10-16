@@ -34,6 +34,8 @@ function Newheader(props) {
   const [fromDateError, setfromDateError] = useState( false );
   const [toDateError, settoDateError] = useState( false );
   const [wrongDateError, setwrongDateError] = useState( false );
+  const [technologyError, settechnologyError] = useState(false)
+  const [levelError, setlevelError] = useState(false)
 
   const updateuserData = (event) => {
     setnavInfo({
@@ -44,9 +46,36 @@ function Newheader(props) {
 
   const search = (event)=>{
     event.preventDefault()
-    const {search,fromDate,toDate} = navInfo
+    const {search,fromDate,toDate,technology,level} = navInfo
+    const decideTech = validateTech(technology)
+    const decideLevel = validateLevel(level)
     const decideDate = validateDate(fromDate,toDate)
-   const decideSearch = validateSearch(search)
+    const decideSearch = validateSearch(search)
+  
+
+function validateTech(technology){
+  settechnologyError(false)
+  if(technology){
+    settechnologyError(false)
+    return true
+  }else{
+    settechnologyError(true)
+    return false
+  }
+}
+
+function validateLevel(level){
+
+  setlevelError(false)
+  if(level){
+  setlevelError(false)
+  return true
+  }
+  else{
+  setlevelError(true)
+    return false
+  }
+}
 
   function validateDate(fromDate,toDate){
     setwrongDateError(false)
@@ -57,33 +86,40 @@ function Newheader(props) {
             if(fromDate)
             {
               if(fromDate < toDate){
-                console.log('correct');
+               
                return true
               }
               else{
-                console.log("wrong date")
+               
                 setwrongDateError(true)
+                return false
               }
             }
         }
         else if(fromDate){
-          console.log("ToDate is empty")
+         
           settoDateError(true)
         }else{
-          console.log("fromDate is empty");
+         
           setfromDateError(true)
         }
       }
       else
       {
         console.log(false);
-        return true
+  
       }
    }
 
     function validateSearch(search){
+      setsearchError( false )
+      if(decideTech || decideLevel || decideDate)
+      {
+        return true
+      }
+      else{
       if ( search ) {
-        setsearchError( false )
+       
         if ( search.search( /[^a-zA-Z]+/ )) {
           setsearchErrorCharacter(false)
           return true
@@ -96,13 +132,14 @@ function Newheader(props) {
         return false
     }
   }
+  }
+  
     
-  if(decideSearch && decideDate){
+  if(decideSearch ){
     const navInfocopy = {...navInfo}
     setnavInfo(navInfocopy)
     console.log(navInfo)
     props.moveAfterValidation(true)
-    // <Link to="/search"style={{textDecoration:'none'}}><span style={{color:'#FFFFFF'}}>Search</span></Link>
   }else{
 
     props.history.push("/")
@@ -119,18 +156,20 @@ function Newheader(props) {
         expand="lg"
         bg="white"
         variant="white"
-        style={{ boxShadow: "0px 0px 6px #00000029" }}
+        style={{ boxShadow: "0px 0px 6px #00000029"}}
       >
         <Container>
           <div>
             <Navbar.Brand href="#home">
-            <Link to="/" href="#"class="navbar-brand"><img src={img} style={{width:'200px'}}></img></Link>
+            <Link to="/" href="#"class="navbar-brand">
+              <img src={img} style={{width:'230px'}}  className="position-sticky"></img>
+            </Link>
             </Navbar.Brand>
           </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" className="navbar-light"/>
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse id="responsive-navbar-nav" style={{marginTop:"23px"}}>
             <Nav className="me-auto">
-              <Row>
+              <Row className="mb-0">
                 <Col md={2}>
               <div className="mb-2">
                
@@ -170,9 +209,9 @@ function Newheader(props) {
                   onFocus={(e) => (e.target.type = "date")}
                 />
                 {fromDateError &&
-                    <p className="text-danger">Please select from Date</p>}
+                    <div style={{color:'red',fontSize:'15px'}}>Please select from Date</div>}
                 {wrongDateError &&
-                    <p className="text-danger">Please select correct date</p>}
+                    <div style={{color:'red',fontSize:'15px'}}>FromDate cannot be greater than To Date</div>}
                
               </div>
               </Col>
@@ -183,16 +222,16 @@ function Newheader(props) {
                 <Form.Control
                   type="text"
                   name="date-of-birth"
-                  name = 'toDate'
+                  name= 'toDate'
                   placeholder="To Date"
                   value={navInfo.toDate}
                   onChange={updateuserData}
                   onFocus={(e) => (e.target.type = "date")}
                 />
                 {toDateError &&
-                    <p className="text-danger">Please select To Date</p>}
+                    <div style={{color:'red',fontSize:'15px'}}>Please select To Date</div>}
                 {wrongDateError &&
-                    <p className="text-danger">Please select correct date</p>}
+                    <div style={{color:'red',fontSize:'15px'}}>ToDate should be greater than FromDate</div>}
               </div>
             </Col>
             <Col md={3}>
@@ -206,6 +245,7 @@ function Newheader(props) {
                   onChange={updateuserData}
                     style={{ width: "315px" }}
                   />
+                  
                   <div
                     style={{
                       position: "absolute",
@@ -216,15 +256,16 @@ function Newheader(props) {
                   >
                     <i class="fas fa-search" />
                   </div>
+                  
                 </InputGroup>
                 {searchError &&
-                    <p className="text-danger">Please enter something </p>}
+                    <div style={{color:'red',fontSize:'15px'}}>Enter questions to search</div>}
                 {searchErrorCharacter &&
-                     <p className="text-danger">Only characters are allowed</p>}
+                    <div style={{color:'red',fontSize:'15px'}}>Only characters are allowed</div>}
                 </div>
                 </Col>
                 <Col md={1}>
-                <Button variant="outline-light" onClick={search} className="mt-1" size="md" style={{backgroundColor:'#FAA81D',width:'100%'}}>
+                <Button variant="outline-light" onClick={search} className="float-end" size="md" style={{backgroundColor:'#FAA81D',width:'100%'}}>
                 <Link to="/search"style={{textDecoration:'none'}}><span style={{color:'#FFFFFF'}}>Search</span></Link>
              
                 </Button>
