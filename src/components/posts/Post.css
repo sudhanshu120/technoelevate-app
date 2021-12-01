@@ -1,0 +1,13 @@
+
+.Ques{
+  margin-left: 20px;
+  margin-right: 10px;
+  color: #707070;
+   display: flex;
+}
+
+.Answ{
+  padding-left:90px;
+  color: #707070;
+  padding-top: 0;
+}

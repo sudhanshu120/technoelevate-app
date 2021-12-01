@@ -1,7 +1,4 @@
 
-
-// -----------------------------------------------------------------------------------------------------------------------------------
-
 import { Button, Modal } from 'react-bootstrap'
 import './Modal.css';
 function SubmitModal(props) {

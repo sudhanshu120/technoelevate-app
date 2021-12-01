@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
   Row,
   Col,
@@ -7,243 +8,273 @@ import {
   Container,
   Button,
   Modal,
-} from "react-bootstrap";
-import DeleteConfirmation from "../deleteConfirm/DeleteConfirm";
-import SubmitModal from "./SubmitModal";
+} from 'react-bootstrap'
+import DeleteConfirmation from '../deleteConfirm/DeleteConfirm'
+import SubmitModal from './SubmitModal'
 
-import "./UploadQuestionView.css";
-
-
+import './UploadQuestionView.css'
 
 function Technoelevate() {
   const [deleteIndex, setdeleteIndex] = useState()
   const [isShowDelete, setisShowDelete] = useState(false)
   const [isShowSubmitModal, setisShowSubmitModal] = useState(false)
 
-
   const [primaryInfo, setprimaryInfo] = useState({
-    candidateName: "",
-    department: "",
-    clientName: "",
-    technology: "",
+    candidateName: '',
+    department: '',
+    clientName: '',
+    technology: '',
     questions: [],
-  });
+  })
 
   const [questions, setQuestions] = useState([
     {
-      question: "",
-      answer: "",
-      difficultyLevel: "",
+      question: '',
+      answer: '',
+      difficultyLevel: '',
     },
-  ]);
+  ])
 
-  const [firstNameError, setfirstNameError] = useState(false);
-  const [firstNameErrorCharacter, setfirstNameErrorCharacter] = useState(false);
+  const [firstNameError, setfirstNameError] = useState(false)
+  const [firstNameErrorCharacter, setfirstNameErrorCharacter] = useState(false)
 
-  const [departmentError, setdepartmentError] = useState(false);
-  const [departmentErrorCharacter, setdepartmentErrorCharacter] = useState(false);
+  const [departmentError, setdepartmentError] = useState(false)
+  const [departmentErrorCharacter, setdepartmentErrorCharacter] = useState(
+    false,
+  )
 
-  const [clientNameError, setclientNameError] = useState(false);
-  const [clientNameErrorCharacter, setclientNameErrorCharacter] = useState(false);
+  const [clientNameError, setclientNameError] = useState(false)
+  const [clientNameErrorCharacter, setclientNameErrorCharacter] = useState(
+    false,
+  )
 
-  const [technologyError, settechnologyError] = useState(false);
-  const [technologyErrorCharacter, settechnologyErrorCharacter] = useState(false);
+  const [technologyError, settechnologyError] = useState(false)
+  const [technologyErrorCharacter, settechnologyErrorCharacter] = useState(
+    false,
+  )
 
-  
-  const [questionError, setquestionError] = useState(false);
+  // const [questionError, setquestionError] = useState(false);
+  const [questionErrorMsg, setquestionErrorMsg] = useState('')
 
+  const [difficultyLevelErrorMsg, setdifficultyLevelErrorMsg] = useState('')
 
-  const [difficultyLevelError, setdifficultyLevelError] = useState(false);
+  const [Arrayquestions, setArrayquestions] = useState([])
 
-  const [Arrayquestions, setArrayquestions] = useState([]);
-
-  const [taskdelete, updateDelete] = React.useState(true);
+  const [taskdelete, updateDelete] = React.useState(true)
 
   const updateuserData = (event) => {
     setprimaryInfo({
       ...primaryInfo,
       [event.target.name]: event.target.value,
-    });
-  };
+    })
+  }
 
   const updatequestionData = (event, index) => {
-    const questionsCopy = [...questions];
+    const questionsCopy = [...questions]
     const questionsCopyObjAtIndex = {
       ...questions[index],
       [event.target.name]: event.target.value,
-    };
-    questionsCopy[index] = { ...questionsCopyObjAtIndex };
-    setQuestions(questionsCopy);
-  };
+    }
+    questionsCopy[index] = { ...questionsCopyObjAtIndex }
+    setQuestions(questionsCopy)
+  }
 
-
+  //   Axios
+  const dataPostToServer = async (strData) => {
+    try {
+      const response = await axios.post(
+        'https://localhost:2000/questions/add-question',
+        strData,
+        { headers: { 'Content-Type': 'application/json' } },
+      )
+      console.log(response.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const saveData = (event) => {
-    event.preventDefault();
-    const { candidateName, department, clientName, technology } = primaryInfo;
-   
+    event.preventDefault()
+    const { candidateName, department, clientName, technology } = primaryInfo
 
-    const validateQsAndDefL=()=>{
-      let count=0
-    questions.forEach((qObj)=>{
-      
-      if(!(qObj.question || qObj.difficultyLevel)){
-        count++
-      }})
-      if(count>0){
-        setquestionError(true);
-        setdifficultyLevelError(true);
+    const validateQsAndDefL = () => {
+      let count = 0
+      questions.forEach((qObj) => {
+        if (!(qObj.question || qObj.difficultyLevel)) {
+          count++
+        }
+      })
+      if (count > 0) {
+        setquestionErrorMsg('Please enter question')
+        setdifficultyLevelErrorMsg('Please select difficultyLevel')
         return false
       }
-      setquestionError(false);
-      setdifficultyLevelError(false);
+      setquestionErrorMsg('')
+      setdifficultyLevelErrorMsg('')
       return true
     }
-   const decideQueAndDeff = validateQsAndDefL()
+    const decideQueAndDeff = validateQsAndDefL()
     const decideCandidateName = validateCandidateName(candidateName)
     const decidedepartment = validateDepartment(department)
     const decideClientName = validateCilentName(clientName)
     const decideTechnology = validateTechnology(technology)
 
-
-    function validateCandidateName(candidateName){
-    if (candidateName) {
-      setfirstNameError(false);
-      if (candidateName.search(/[^a-zA-Z]+/)) {
-        setfirstNameErrorCharacter(false);
-        return true
+    function validateCandidateName(candidateName) {
+      if (candidateName) {
+        setfirstNameError(false)
+        if (candidateName.search(/[^a-zA-Z]+/)) {
+          setfirstNameErrorCharacter(false)
+          return true
+        } else {
+          setfirstNameErrorCharacter(true)
+        }
       } else {
-        setfirstNameErrorCharacter(true);
+        setfirstNameErrorCharacter(false)
+        setfirstNameError(true)
       }
-    } else {
-      setfirstNameErrorCharacter(false);
-      setfirstNameError(true);
+      return false
     }
-    return false
-  }
 
-  function validateDepartment(department){
-    if (department) {
-      setdepartmentError(false);
-      if (department.search(/[^a-zA-Z]+/)) {
-        setdepartmentErrorCharacter(false);
-        return true
+    function validateDepartment(department) {
+      if (department) {
+        setdepartmentError(false)
+        if (department.search(/[^a-zA-Z]+/)) {
+          setdepartmentErrorCharacter(false)
+          return true
+        } else {
+          setdepartmentErrorCharacter(true)
+        }
       } else {
-        setdepartmentErrorCharacter(true);
+        setdepartmentErrorCharacter(false)
+        setdepartmentError(true)
       }
-    } else {
-      setdepartmentErrorCharacter(false);
-      setdepartmentError(true);
+      return false
     }
-    return false
-  }
 
-    function validateCilentName(clientName){
-    if (clientName) {
-      setclientNameError(false);
-      if (clientName.search(/[^a-zA-Z]+/)) {
-        setclientNameErrorCharacter(false);
-        return true
+    function validateCilentName(clientName) {
+      if (clientName) {
+        setclientNameError(false)
+        if (clientName.search(/[^a-zA-Z]+/)) {
+          setclientNameErrorCharacter(false)
+          return true
+        } else {
+          setclientNameErrorCharacter(true)
+        }
       } else {
-        setclientNameErrorCharacter(true);
+        setclientNameErrorCharacter(false)
+        setclientNameError(true)
       }
-    } else {
-      setclientNameErrorCharacter(false);
-      setclientNameError(true);
+      return false
     }
-    return false
-  }
 
-  function validateTechnology(technology){
-    if (technology) {
-      settechnologyError(false);
-      if (technology.search(/[^a-zA-Z]+/)) {
-        settechnologyErrorCharacter(false);
-        return true
+    function validateTechnology(technology) {
+      if (technology) {
+        settechnologyError(false)
+        if (technology.search(/[^a-zA-Z]+/)) {
+          settechnologyErrorCharacter(false)
+          return true
+        } else {
+          settechnologyErrorCharacter(true)
+        }
       } else {
-        settechnologyErrorCharacter(true);
+        settechnologyErrorCharacter(false)
+        settechnologyError(true)
       }
-    } else {
-      settechnologyErrorCharacter(false);
-      settechnologyError(true);
+      return false
     }
-    return false
-  }
 
-    
     // -------------------------------------------------------------------------------------------------
-    if(decideCandidateName && decidedepartment && decideClientName && decideTechnology && decideQueAndDeff){
-      const finalQuestionsCopy = [...questions];
-      primaryInfo.questions = finalQuestionsCopy;
-  
-      console.log("Final Object -", primaryInfo);
+    if (
+      decideCandidateName &&
+      decidedepartment &&
+      decideClientName &&
+      decideTechnology &&
+      decideQueAndDeff
+    ) {
+      const finalQuestionsCopy = [...questions]
+      primaryInfo.questions = finalQuestionsCopy
+
+      console.log('Final Object -', primaryInfo)
+      let strData = JSON.stringify(primaryInfo)
+      dataPostToServer(strData)
+      console.log('strData', strData)
       setisShowSubmitModal(true)
+
+      setprimaryInfo({
+        candidateName: '',
+        department: '',
+        clientName: '',
+        technology: '',
+        questions: [],
+      })
+      setQuestions([
+        {
+          question: '',
+          answer: '',
+          difficultyLevel: '',
+        },
+      ])
     }
-   
-  };
+  }
 
   const addAns = (event, index) => {
-    event.preventDefault();
-    const question= questions[index].question
+    event.preventDefault()
+    const question = questions[index].question
 
     const difficultyLevel = questions[index].question
-    const decidedque = validateque(question);
-    const decideddiff = validatedifficultylevel(difficultyLevel);
+    const decidedque = validateque(question)
+    const decideddiff = validatedifficultylevel(difficultyLevel)
 
     function validateque(question) {
       if (question) {
-        setquestionError(false);
-        return true;
+        // setquestionError(false);
+        return true
       } else {
-        setquestionError(true);
+        // setquestionError(true);
+        setquestionErrorMsg('Please enter question')
       }
       return false
     }
 
     function validatedifficultylevel(difficultyLevel) {
       if (difficultyLevel) {
-        setdifficultyLevelError(false);
+        // setdifficultyLevelError(false);
         return true
       } else {
-        setdifficultyLevelError(true);
+        setdifficultyLevelErrorMsg('Please select difficultyLevel')
       }
       return false
     }
 
     if (decidedque & decideddiff) {
-      const questionsCopy = [...questions];
+      const questionsCopy = [...questions]
       const emptyObject = {
-        question: "",
-        answer: "",
-        difficultyLevel: "",
-      };
-      questionsCopy.push(emptyObject);
-      setQuestions(questionsCopy);
+        question: '',
+        answer: '',
+        difficultyLevel: '',
+      }
+      questionsCopy.push(emptyObject)
+      setQuestions(questionsCopy)
+    } else {
+      console.log('hii')
     }
-    else{
-      console.log('hii');
-    }
-  };
+  }
 
   const isLast = (index) => {
-    return index === questions.length - 1;
-  };
-
-
-
+    return index === questions.length - 1
+  }
 
   const deleteGetDataIndex = (index) => {
-    const questionscopy = [...questions];
+    const questionscopy = [...questions]
 
-    questionscopy.splice(index, 1);
-    setQuestions(questionscopy);
-};
-const sendIndexOfDelete = (index) => {
-  setdeleteIndex(index)
-}
+    questionscopy.splice(index, 1)
+    setQuestions(questionscopy)
+  }
+  const sendIndexOfDelete = (index) => {
+    setdeleteIndex(index)
+  }
 
-
-// --------------------------------------------------------------------------------
+  // --------------------------------------------------------------------------------
   return (
     <div className="mainDiv">
       <Container className="container1">
@@ -270,10 +301,10 @@ const sendIndexOfDelete = (index) => {
                 />
               </FloatingLabel>
               {firstNameError && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please enter your name </div>
+                <div className="setvalidation">Please enter your name </div>
               )}
               {firstNameErrorCharacter && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
+                <div className="setvalidation">Only characters are allowed</div>
               )}
             </Col>
 
@@ -293,10 +324,12 @@ const sendIndexOfDelete = (index) => {
                 </Form.Select>
               </FloatingLabel>
               {departmentError && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please select the department </div>
+                <div className="setvalidation">
+                  Please select the department{' '}
+                </div>
               )}
               {departmentErrorCharacter && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
+                <div className="setvalidation">Only characters are allowed</div>
               )}
             </Col>
             <Col md={3} className="InputField3">
@@ -311,10 +344,10 @@ const sendIndexOfDelete = (index) => {
                 />
               </FloatingLabel>
               {clientNameError && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please enter client name </div>
+                <div className="setvalidation">Please enter client name </div>
               )}
               {clientNameErrorCharacter && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
+                <div className="setvalidation">Only characters are allowed</div>
               )}
             </Col>
 
@@ -336,15 +369,17 @@ const sendIndexOfDelete = (index) => {
                 </Form.Select>
               </FloatingLabel>
               {technologyError && (
-                <div className="mb-2" style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please select technology </div>
+                <div className="mb-2" className="setvalidation">
+                  Please select technology{' '}
+                </div>
               )}
               {technologyErrorCharacter && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Only characters are allowed</div>
+                <div className="setvalidation">Only characters are allowed</div>
               )}
             </Col>
           </Row>
         </Container>
-        
+
         {questions.map((value, index) => {
           return (
             <div key={index}>
@@ -363,13 +398,14 @@ const sendIndexOfDelete = (index) => {
                         value={questions[index].question}
                         onChange={(event) => updatequestionData(event, index)}
                         placeholder="Leave a comment here"
-                        style={{ height: "60px" }}
+                        style={{ height: '60px' }}
                       />
                     </FloatingLabel>
                     {/* {questions[index].question?'':setquestionError} */}
-                    {questionError && (
-                <div className="mb-2" style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please enter question </div>
-              )}
+
+                    <div className="mb-2" className="setvalidation">
+                      {value.question ? '' : questionErrorMsg}
+                    </div>
                   </Col>
 
                   <Col md={3}>
@@ -381,7 +417,7 @@ const sendIndexOfDelete = (index) => {
                       <Form.Select
                         aria-label="Floating label select example"
                         className="mb-1"
-                        name="difficultyLeve"
+                        name="difficultyLevel"
                         value={questions[index].difficultyLevel}
                         onChange={(event) => updatequestionData(event, index)}
                       >
@@ -391,10 +427,10 @@ const sendIndexOfDelete = (index) => {
                         <option value="Expert">Expert</option>
                       </Form.Select>
                     </FloatingLabel>
-                  
-                    {difficultyLevelError && (
-                <div style={{color:'red',fontSize:'15px',paddingLeft:'5px'}}>Please select difficultyLevel </div>
-              )}
+
+                    <div className="setvalidation">
+                      {value.difficultyLevel ? '' : difficultyLevelErrorMsg}
+                    </div>
                   </Col>
                 </Row>
               </Container>
@@ -413,7 +449,7 @@ const sendIndexOfDelete = (index) => {
                         name="answer"
                         onChange={(event) => updatequestionData(event, index)}
                         value={questions[index].answer}
-                        style={{ height: "150px" }}
+                        style={{ height: '150px' }}
                       />
                     </FloatingLabel>
                   </Col>
@@ -426,14 +462,13 @@ const sendIndexOfDelete = (index) => {
                       onClick={
                         isLast(index)
                           ? (event) => {
-                              addAns(event, index);
+                              addAns(event, index)
                             }
-                          :() =>{
-                            
-                            sendIndexOfDelete(index);
-                            { setisShowDelete(true) }
-                            
-                            
+                          : () => {
+                              sendIndexOfDelete(index)
+                              {
+                                setisShowDelete(true)
+                              }
                             }
                       }
                       active
@@ -446,31 +481,33 @@ const sendIndexOfDelete = (index) => {
                         <button className="btn-icon-plus">
                           <i
                             className="fas fa-trash"
-                            style={{ color: "white" }}
+                            style={{ color: 'white' }}
                           />
                         </button>
                       )}
 
-                      {index === questions.length - 1 ? "Add New" : "Delete"}
+                      {index === questions.length - 1 ? 'Add New' : 'Delete'}
                     </Button>
                   </Col>
                 </Row>
               </Container>
             </div>
-          );
+          )
         })}
-    
+
         <Container>
           <Row>
             <Col md={12} className="submitbtn">
               <Button
                 className="btn float-end"
                 style={{
-                  color: "white",
-                  backgroundColor: "#FAA81D",
-                  border: "none",
+                  color: 'white',
+                  backgroundColor: '#FAA81D',
+                  border: 'none',
                 }}
-                onClick={(event)=>{saveData(event)}}
+                onClick={(event) => {
+                  saveData(event)
+                }}
                 active
               >
                 Submit
@@ -480,21 +517,21 @@ const sendIndexOfDelete = (index) => {
         </Container>
       </Container>
 
+      {/* ------------------------------------------------------------------ */}
+      {isShowDelete && (
+        <DeleteConfirmation
+          setisShowDelete={setisShowDelete}
+          deleteIndex={deleteIndex}
+          deleteGetDataIndex={deleteGetDataIndex}
+        />
+      )}
 
-
-
-{/* ------------------------------------------------------------------ */}
-{isShowDelete && <DeleteConfirmation setisShowDelete={setisShowDelete} deleteIndex={deleteIndex} deleteGetDataIndex={deleteGetDataIndex} />}
-  
-  
-{isShowSubmitModal && <SubmitModal setisShowSubmitModal={setisShowSubmitModal} />}
-{/* ----------------------------------------------------------------- */}
-
+      {isShowSubmitModal && (
+        <SubmitModal setisShowSubmitModal={setisShowSubmitModal} />
+      )}
+      {/* ----------------------------------------------------------------- */}
     </div>
-
-
-
-  );
+  )
 }
 
-export default Technoelevate;
+export default Technoelevate
